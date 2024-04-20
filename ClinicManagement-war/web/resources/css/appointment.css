@@ -1,0 +1,203 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 17 Mar, 2024, 9:54:14 PM
+    Author     : claricelim
+*/
+.appointment-home {
+    width: 750;
+    height: 100%;
+    background-color: #ffffff;
+    margin: 0 auto;
+    border-radius: 20px;
+    transform: translateY(-10px);
+}
+
+.appointment-appointments {
+    width: 959;
+    height: 97%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 20px;
+    transform: translateY(-10px)
+}
+
+.appointment-create {
+    width: 959;
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 0 auto;
+    align-items: center;
+    border-radius: 20px;
+    transform: translateY(-10px);
+
+}
+
+.profile-container {
+    width: 750;
+    background-color: #ffffff;
+    margin: 0 auto;
+    border-radius: 20px;
+    transform: translateY(-40px);
+    height: 920px;
+}
+
+.book-button {
+  background-color: #0F62FE; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+
+.title {
+    font-size: 33;
+    color: #5D7285;
+    margin-left: 32;
+    padding-top: 39;
+}
+
+.appointment-time {
+    display: flex;
+    flex-direction: row;
+    height: 127;
+    width: 494;
+    padding-left: 53;
+    padding-top: 9;
+    
+}
+
+.appointment-queue {
+    display: flex;
+    flex-direction: row;
+    padding-left: 155;
+    padding-top: 28;
+}
+
+.appointment-room {
+    display: flex;
+    flex-direction: row;
+    padding-left: 175;
+    padding-top: 28;
+}
+
+.appointment-block {
+    display: flex;
+    flex-direction: column;
+    height: 166;
+    width: 268.5;
+    background-color: #FFECD6;
+    align-items: center;
+    justify-content: center;
+    
+  
+    
+}
+
+div.solid {
+    border-style: none solid none none;
+    color: #EFF2F4;
+    padding-left: 48;
+    width: 1;
+    height: 79;
+    align-self: center;
+}
+
+.label-style {
+    margin-right: 30px; /* Adjust the margin to increase or decrease the space between label and input */
+}
+
+.profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden; /* Ensures the image stays within the rounded border */
+}
+
+.profile-photo-container {
+    text-align: center;
+}
+
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+body.fade-out {
+    animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+body.fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.doctor-details-container {
+    display: flex;
+    align-items: center; /* Ensures vertical alignment */
+    font-size: 20px; /* Adjusts the font size of the label */
+    justify-content: center;
+}
+
+.doctor-label {
+    display: flex;
+    
+    color: #34495E;
+    align-items: center; /* Ensures vertical alignment with the icon */
+    margin-right: 5px; /* Space between label and name */
+    white-space: nowrap; /* Prevents wrapping to a new line */
+}
+
+.doctor-name {
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    color: #34495E; /* A darker shade for readability */
+    white-space: nowrap; /* Prevents wrapping to a new line */
+    display: inline; /* Aligns with the text */
+    transform: translateY(-3px);
+    margin: 0; /* Resets any default margins */
+}
+
+.fa-stethoscope {
+    margin-right: 5px; /* Space between icon and label text */
+    font-size: 20px; /* Icon size */
+    color: #5D6D7E; /* Icon color */
+}
+
+.max-content {
+    height: max-content;
+}
+
+
+

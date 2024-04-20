@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/patientDefault.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        Home
+
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form class='appointment-home'>
+            <div style="margin-top: -3vh; display: flex; height: 80vh;justify-content: center;">
+                <ui:fragment rendered="#{empty patientManagedBean.loggedInPatient.appointments or not patientManagedBean.isAppointmentDateToday(patientManagedBean.loggedInPatient.appointments)}">
+                    <div>
+                        <header class="title">Welcome,&nbsp;#{patientManagedBean.loggedInPatient.firstName}&nbsp;#{patientManagedBean.loggedInPatient.lastName}&nbsp;&#10084;</header>
+                        <div class="appointment-time">
+                            <div style="display: flex; flex-direction: column; align-self: center">
+                                <span style="font-size: 31; padding-left: 32; font-weight: bold">#{patientManagedBean.formatTodayDate()}</span>
+                                <span style="color: darklategrey; font-size: 20; padding-left: 32">#{patientManagedBean.formatDayOfWeek()}</span>
+                            </div>
+                            <div class="solid" />
+                            <span style="padding-left: 53; align-self: center; color: darklategrey; font-size: 20">#{patientManagedBean.formatTime()}</span>
+                        </div>
+                        <hr />
+                        <div style="padding-left: 110 ">
+                            <p:commandButton title="Book an Appointment"
+                                             action="makePatientAppointment.xhtml"
+                                             style="background-color: #89CFF0; color: white; border-radius: 8px; height: 56px; width: 311px; font-size: 18px;"
+                                             onmouseover="this.style.backgroundColor='#6DB8EF'"
+                                             onmouseout="this.style.backgroundColor='#89CFF0';" />
+                        </div>  
+                    </div>
+                </ui:fragment>
+                
+                <ui:fragment rendered="#{patientManagedBean.isAppointmentDateToday(patientManagedBean.loggedInPatient.appointments)}">
+                    <div>
+                        <header class="title">Today's Appointment</header>
+                        <div class="appointment-time">
+                            <div style="display: flex; flex-direction: column; align-self: center">
+                                <span style="font-size: 31; padding-left: 32; font-weight: bold">#{patientManagedBean.formatTodayDate()}</span>
+                                <span style="color: darklategrey; font-size: 20; padding-left: 32">#{patientManagedBean.formatDayOfWeek()}</span>
+                            </div>
+                            <div class="solid" />
+                            <span style="padding-left: 53; align-self: center; color: darklategrey; font-size: 20">#{patientManagedBean.formatTime()}</span>
+                        </div>
+                        <hr />
+                        <div class='appointment-queue'>
+                            <span style='font-size: 31; font-weight: bold'>Queue Number</span>
+                            <span style='font-size: 33; color: lightsalmon; padding-left: 49; font-weight: bold'>#{patientManagedBean.patientId}</span>
+                        </div>
+                        <div class='appointment-room'>
+                            <span style="font-size: 20; color: darkslategrey;">Room Number</span>
+                            <span style="font-size: 20; padding-left: 80; color: darklategrey;">#{patientManagedBean.appointmentRoomNum()}</span>
+                        </div>
+                        <div style="display: flex; flex-direction: row; padding-top: 53; justify-content: space-between; padding-left: 47">
+                            <div class="appointment-block">
+                                <span style="font-size: 20">As at</span>
+                                <span style="font-size: 20; color: grey">#{patientManagedBean.formatTime()}</span>
+                            </div>
+                            <div class="appointment-block">
+                                <span style="font-size: 20">Patients before you</span>
+                                <span style="font-size: 40; font-weight: bold">#{patientManagedBean.getPatientsInFront()}</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <p style="color: grey;">Estimated Waiting Time: #{patientManagedBean.getWaitingTime()} minutes</p>
+                        </div>
+                        <br/>
+                    </div>
+
+                        
+                </ui:fragment>
+            </div>
+
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

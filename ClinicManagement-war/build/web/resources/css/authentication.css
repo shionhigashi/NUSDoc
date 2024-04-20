@@ -1,0 +1,44 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 18 Mar, 2024, 8:35:07 PM
+    Author     : claricelim
+*/
+
+.authentication-form {
+    width: 712;
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    height: 90vh;  
+    font-size: 12;  
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+body.fade-out {
+    animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+body.fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+}

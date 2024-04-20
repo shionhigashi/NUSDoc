@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./layout/authentication.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        Login
+    </ui:define>
+
+    <ui:define name="content">
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <h:form id='form' class="authentication-form">
+                <p:growl id="growl" showDetail="true" sticky="true"/>
+                <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                    <div style="font-size: 40px; color: #333; font-weight: bold; margin-top: -200px;">
+                        <div style="display: flex; align-items: center;">
+                            <i class="fa fa-heart fa-3x" style="color: red; margin-right: 5px;"></i> 
+                            <span style="font-size: 1.5em; line-height: 1.5;">NUSDoc</span>
+                        </div>
+                    </div>
+
+
+                    <br/>
+                    <h1 style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 15px; color: #0047ab; font-weight: bold; transform: skew(-10deg); padding-left: 10px;">
+                        Elevating Your Wellbeing Experience
+                    </h1>
+
+
+
+
+                    <div style='padding-top: 90; display: flex; flex-direction: column'>
+                        <p:panelGrid >
+                            <p:outputLabel for="email" value="Email:" />
+                            <h:panelGroup>
+                                <p:inputText id="email"
+                                             placeholder="Email"
+                                             type='email'
+                                             required="true"
+                                             requiredMessage="Email is requried"
+                                             style='background-color: #EFF2F4; width: 578; height: 44; border-radius: 8px;'
+                                             value='#{authenticationManagedBean.email}'
+                                             />
+                                <p:message for="email" />
+                            </h:panelGroup>
+                            <br />
+                            <p:outputLabel for="password" value="Password:" />
+                            <h:panelGroup>
+                                <p:password 
+                                    id="password"
+                                    required='true'
+                                    requiredMessage="Password is required"
+                                    placeholder="Password"
+                                    style='background-color: #EFF2F4; width: 578; height: 44; border-radius: 8px;'
+                                    value='#{authenticationManagedBean.password}'/>
+                                <p:message for="password" />
+                            </h:panelGroup>
+                        </p:panelGrid>
+                    </div>
+                    <div style='align-self: center; padding-top: 40px;'>
+                        <p:commandButton title='Log In' 
+                                         actionListener='#{authenticationManagedBean.login}'
+                                         update=':form:growl'
+                                         style="background-color: #D9D9D9; color: white; width: 393px; height: 64px; border-radius: 8px; font-size: 40px; font-weight: bold; border: none;"
+                                         onmouseover="this.style.backgroundColor='#89CFF0';"
+                                         onmouseout="this.style.backgroundColor='#D9D9D9';"/>
+                    </div>
+
+
+                    <br />
+                    <p style='align-self: center'> Don't have an account? 
+                        <span style='display: inline-block;'>
+                            <a href="register.xhtml">Sign up here</a>
+                        </span>
+                    </p>
+                    
+                    <!--
+                    <br/>
+                    <br />
+                    
+                    <p style='align-self: center; font-size: 25; font-weight: bold;'>Or Log in via SingPass</p>
+                    <br/>
+                    <div style='align-self: center;'>
+                        <p:commandButton title='Log In via SingPass' 
+
+                                         style="background-color: #FA7A7A; color: white; width: 387; height: 60; border-radius: 8px; font-size: 35; font-weight: bold; border: none"/>
+                    </div> 
+                    --> 
+                </div>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

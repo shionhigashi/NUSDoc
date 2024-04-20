@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/default.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        View All Appointment
+    </ui:define>
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:event listener="#{staffManagedBean.loadStaffData}" type="preRenderView" />
+        </f:metadata>
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div style="margin-bottom: 0; margin-top: 0; color: #00008B;">
+                    <header style="font-size: 30px; font-style: italic; font-weight: bold; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                        <i class="fa fa-calendar-check-o" aria-hidden="true" style="margin-right: 10px;"></i>
+                        Appointments
+                    </header>
+                </div>
+            </div>
+        </div>
+        <h:panelGroup id="appointmentPanel">
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;"><i class="fa fa-hashtag" aria-hidden="true"></i> Appointment ID</th>
+                                            <th style="text-align: center;"><i class="fa fa-calendar" aria-hidden="true"></i> Date</th>
+                                            <th style="text-align: center;"><i class="fa fa-id-badge" aria-hidden="true"></i> Patient ID</th>
+                                            <th style="text-align: center;"><i class="fa fa-user" aria-hidden="true"></i> Patient Name</th>
+                                            <th style="text-align: center;"><i class="fa fa-user" aria-hidden="true"></i> Appointment Status</th>
+                                            <th style="text-align: center;"><i class="fa fa-cog" aria-hidden="true"></i> Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ui:fragment rendered="#{not empty staffManagedBean.appointments}">
+                                            <ui:repeat value="#{staffManagedBean.appointments}" var="appointment">
+                                                <tr style="transition: all 0.3s ease-in-out;"
+                                                    onmouseover="this.style.backgroundColor='#D0E4F7'; this.style.boxShadow='0 2px 10px rgba(0,0,0,0.1);'"
+                                                    onmouseout="this.style.backgroundColor=''; this.style.boxShadow='';">
+                                                    <td style="text-align: center;">#{appointment.appointmentId}</td>
+                                                    <td style="text-align: center;">#{staffManagedBean.formatDate(appointment.appointDateTime)}</td>
+                                                    <td style="text-align: center;">#{appointment.patient.patientId}</td>
+                                                    <td style="text-align: center;">#{appointment.patient.lastName} #{appointment.patient.firstName}</td>
+                                                    <td style="text-align: center;">#{appointment.status}</td>
+                                                    <td style="text-align: center;">
+                                                        <a href="viewAppointment.xhtml?viewAppointmentId=#{appointment.appointmentId}" 
+                                                           class="viewPatientProfile-button" 
+                                                           style="color: #ADD8E6; text-decoration: none; padding: 5px 10px; background-color: #F0F8FF; border-radius: 5px; border: 1px solid #ADD8E6; display: inline-block;"
+                                                           onmouseover="this.style.backgroundColor='#ADD8E6'; this.style.color='#FFFFFF'; this.style.borderColor='#6495ED'; event.stopPropagation();"
+                                                           onmouseout="this.style.backgroundColor='#F0F8FF'; this.style.color='#ADD8E6'; this.style.borderColor='#ADD8E6';">
+                                                            View Appointment        
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </ui:repeat>
+                                        </ui:fragment>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+            </div>
+
+        </h:panelGroup>
+    </ui:define>
+
+    <ui:define name="script">
+
+    </ui:define>
+
+</ui:composition>

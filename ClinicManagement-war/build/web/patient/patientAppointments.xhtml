@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/patientDefault.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+    <ui:define name="title">
+        My Appointments
+    </ui:define>
+
+    <ui:define name="content">
+        <p:growl id="growl" showDetail="true" sticky="true" />
+        <h:form id="form" styleClass="appointment-appointments">
+            <header class="title"><i class="fa fa-calendar" aria-hidden="true"></i> My Appointments</header>
+            <br/>
+            <p:tabView id="tabView" dynamic="true" activeIndex="#{patientManagedBean.activeIndex}">
+                <p:ajax event="tabChange" listener="#{patientManagedBean.changeTab}" update="upcomingAppointmentTable pastAppointmentTable"/>
+
+                <p:tab title="Upcoming">
+                    <f:metadata>
+                        <f:viewParam name="tab" value="0" />
+                    </f:metadata>
+                    <p:dataTable id="upcomingAppointmentTable" value="#{patientManagedBean.upcomingAppointments}" var="upcoming" 
+                                 style="width: 851px; margin: auto; border-collapse: collapse; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+                                 emptyMessage="You have no upcoming appointments.">
+                        <p:column headerText="Date" style="padding: 10px; border-bottom: 1px solid #e6e6e6;">
+                            <h:outputText value="#{appointmentManagedBean.formatDate(upcoming.appointDateTime)}" />
+                        </p:column>
+
+                        <p:column headerText="Doctor" style="padding: 10px; border-bottom: 1px solid #e6e6e6;">
+                            <h:outputText value="Dr&nbsp;#{upcoming.staff.lastName}" />
+                        </p:column>
+                        <p:column headerText="Message" style="padding: 10px; border-bottom: 1px solid #e6e6e6;">
+                            <h:outputText value="#{upcoming.message}" />
+                        </p:column>
+
+                        <p:column headerText="Actions" style="padding: 10px; border-bottom: 1px solid #e6e6e6; text-align:center;">
+                            <p:commandButton style="background-color: #AED6F1; color: white;  border-radius: 8px; font-size: 13px;" 
+                                             onmouseover="this.style.backgroundColor='#89CFF0'; display: inline-block;" 
+                                             onmouseout="this.style.backgroundColor='#AED6F1';"
+                                             icon="pi pi-pencil"
+                                             oncomplete="PF('appointmentDialog').show()"
+                                             update=":form2"
+                                             value="Edit">
+                                <f:param name="selectedAppointmentId" value="#{appointmentManagedBean.selectedAppointment.appointmentId}" />
+                                <f:setPropertyActionListener value="#{upcoming}" target="#{appointmentManagedBean.selectedAppointment}" /> 
+                                
+                            </p:commandButton>
+                            <p:commandButton value="Cancel" 
+                                             icon="pi pi-times" 
+                                             actionListener="#{appointmentManagedBean.deleteAppointment(upcoming)}" 
+                                             style="background-color: #AED6F1; color: white;  border-radius: 8px; font-size: 13px;" 
+                                             onmouseover="this.style.backgroundColor='#89CFF0';" 
+                                             onmouseout="this.style.backgroundColor='#AED6F1';" 
+                                             update=":form growl"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+
+                <p:tab title="Past">
+                    <f:metadata>
+                        <f:viewParam name="tab" value="1" />
+                    </f:metadata>
+                    <p:dataTable id="pastAppointmentTable" value="#{patientManagedBean.pastAppointments}" var="past" 
+                                 style="width: 851px; margin: auto; border-collapse: collapse; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+                                 emptyMessage="You have no past appointments.">
+
+                        <p:column headerText="Date" style="padding: 10px; border-bottom: 1px solid #e6e6e6;">
+                            <h:outputText value="#{appointmentManagedBean.formatDate(past.appointDateTime)}" />
+                        </p:column>
+
+                        <p:column headerText="Doctor" style="padding: 10px; border-bottom: 1px solid #e6e6e6;">
+                            <h:outputText value="Dr&nbsp;#{past.staff.lastName}" />
+                        </p:column>
+                        <p:column headerText="Actions" style=" width:150px; text-align:center; padding: 10px; border-bottom: 1px solid #e6e6e6;">
+                            <p:commandButton style="background-color: #AED6F1; color: white;  border-radius: 8px; font-size: 13px;" 
+                                             onmouseover="this.style.backgroundColor='#89CFF0'; display: inline-block;" 
+                                             onmouseout="this.style.backgroundColor='#AED6F1';"
+                                             icon="pi pi-search"
+                                             oncomplete="PF('appointmentDialog').show()"
+                                             update=":form3"
+                                             value="Review">
+                                <f:param name="selectedAppointmentId" value="#{appointmentManagedBean.selectedAppointment.appointmentId}" />
+                                <f:setPropertyActionListener value="#{past}" target="#{appointmentManagedBean.selectedAppointment}" /> 
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+            </p:tabView>    
+        </h:form>
+        <h:form id="form2">
+            <p:dialog header="⊕ Appointment Details" widgetVar="appointmentDialog" modal="true"
+                      showEffect="fade" hideEffect="fade" resizable="false"
+                      width="600" height="800" responsive="true" style="overflow:auto;
+                      border: none; background: #f0f0f0; color: #333; font-weight: bold;
+                      font-size: 18px; border-radius: 20px;">
+
+                <p:outputPanel id="appointmentDetails" styleClass="event-details-panel">
+                    <br/>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                            <i class="fa fa-heart fa-3x" style="color: red; margin-right: 5px;"></i> 
+                            <span style="font-size: 1.5em; line-height: 1.5;">NUSDoc</span>
+                    </div>
+                    <br/>
+                    <div style="text-align: center;">
+                        <img style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 10px;" 
+                                 src="./../upload/doctorprofile.jpg" 
+                                 alt="Doctor Profile" />
+                    </div>
+                    <br/>
+                    <div class="doctor-details-container">
+                        <h:outputLabel styleClass="doctor-label">
+                            <i class="fa fa-stethoscope"></i> Doctor's Name:
+                        </h:outputLabel>
+                        <h:outputText value="#{appointmentManagedBean.selectedAppointment.staff.firstName} #{appointmentManagedBean.selectedAppointment.staff.lastName}" styleClass="doctor-name" />
+                    </div>
+                    <div style="height: 0.5px; background-color: grey; margin-top: 20px; margin-bottom: 20px;"></div>
+
+                    <br/>
+                    <div style="padding: 10px; background-color: #f2f2f2; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e6e6e6; margin-bottom: 10px;">
+                        <h:outputLabel style="font-weight: bold; color: #333; font-size: 16px;">
+                            <i class="fa fa-info-circle" style="color: #5bc0de; margin-right: 5px;"></i> Appointment Status:
+                        </h:outputLabel>
+                        <h:outputText value=" #{appointmentManagedBean.selectedAppointment.status}" style="color: #89CFF0; font-size: 16px;"/>
+                    </div>
+
+                    <div style="padding: 10px; background-color: #f2f2f2; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e6e6e6; margin-bottom: 10px;">
+                        <h:outputLabel style="font-weight: bold; color: #333; font-size: 16px;">
+                            <i class="fa fa-calendar" style="color: #5bc0de; margin-right: 5px;"></i> Appointment Date:
+                        </h:outputLabel>
+                        <h:outputText value="#{appointmentManagedBean.selectedAppointment.appointDateTime}" style="color: #89CFF0; font-size: 16px;">
+                            <f:convertDateTime pattern="EEE dd/MM/yyyy, hh:mm a"/>
+                        </h:outputText>
+                    </div>
+
+                    <div style="padding: 10px; background-color: #f2f2f2; border-radius: 8px; border: 1px solid #e6e6e6; margin-bottom: 10px;">
+                        <p:outputLabel for="description" style="font-weight: bold; color: #333; font-size: 16px; display: block; margin-bottom: 5px;">
+                            <i class="fa fa-pencil" aria-hidden="true" style="color: #5bc0de; margin-right: 5px;"></i> Description of Symptoms *
+                        </p:outputLabel>
+
+                        <p:inputTextarea id="description" 
+                                         value="#{appointmentManagedBean.selectedAppointment.description}" 
+                                         required="true"
+                                         rows="5" 
+                                         cols="30" 
+                                         maxlength="500" 
+                                         autoResize="false" 
+                                         requiredMessage="Please describe your symptoms"  
+                                         style="width:100%; max-width:100%; box-sizing: border-box; border: none; font-size: 16px; padding: 8px;"
+                                         counter="display"
+                                         counterTemplate="{0} characters remaining." />
+
+                        <h:outputText id="display" style="color: lightgray; font-size: 12px; display: block; margin-top: 5px; text-align: right;" />
+                    </div>
+                    <p:commandButton 
+                        style="background-color: #AED6F1; color: white;  border-radius: 8px; font-size: 13px;"
+                        icon="pi pi-check"
+                        onmouseover="this.style.backgroundColor='#89CFF0';" 
+                        onmouseout="this.style.backgroundColor='#AED6F1';" 
+                        value="Save Changes"
+                        actionListener="#{appointmentManagedBean.editAppointment}"
+                        update=":form2:description growl"
+                        oncomplete="PF('appointmentDialog').hide();"/>
+                </p:outputPanel>
+
+            </p:dialog>
+        </h:form>
+        <h:form id="form3">
+            <p:dialog header="⊕ Appointment Details" widgetVar="appointmentDialog" modal="true"
+                      showEffect="fade" hideEffect="fade" resizable="false"
+                      width="600" height="800" responsive="true" style="overflow:auto;
+                      border: none; background: #f0f0f0; color: #333; font-weight: bold;
+                      font-size: 18px; border-radius: 20px;">
+
+                <p:outputPanel id="appointmentDetails" styleClass="event-details-panel">
+                    <br/>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <i class="fa fa-heart fa-3x" style="color: red; margin-right: 5px;"></i> 
+                        <span style="font-size: 1.5em; line-height: 1.5;">NUSDoc</span>
+                    </div>
+                    <br/>
+                    <div style="text-align: center;">
+                        <img style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 10px;" 
+                             src="./../upload/doctorprofile.jpg" 
+                             alt="Doctor Profile" />
+                    </div>
+                    <br/>
+                    <div class="doctor-details-container">
+                        <h:outputLabel styleClass="doctor-label">
+                            <i class="fa fa-stethoscope"></i> Doctor's Name:
+                        </h:outputLabel>
+                        <h:outputText value="#{appointmentManagedBean.selectedAppointment.staff.firstName} #{appointmentManagedBean.selectedAppointment.staff.lastName}" styleClass="doctor-name" />
+                    </div>
+                    <div style="height: 0.5px; background-color: grey; margin-top: 20px; margin-bottom: 20px;"></div>
+
+                    <br/>
+                    <div style="padding: 10px; background-color: #f2f2f2; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e6e6e6; margin-bottom: 10px;">
+                        <h:outputLabel style="font-weight: bold; color: #333; font-size: 16px;">
+                            <i class="fa fa-info-circle" style="color: #5bc0de; margin-right: 5px;"></i> Appointment Status:
+                        </h:outputLabel>
+                        <h:outputText value=" #{appointmentManagedBean.selectedAppointment.status}" style="color: #89CFF0; font-size: 16px;"/>
+                    </div>
+
+                    <div style="padding: 10px; background-color: #f2f2f2; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e6e6e6; margin-bottom: 10px;">
+                        <h:outputLabel style="font-weight: bold; color: #333; font-size: 16px;">
+                            <i class="fa fa-calendar" style="color: #5bc0de; margin-right: 5px;"></i> Appointment Date:
+                        </h:outputLabel>
+                        <h:outputText value=" #{appointmentManagedBean.selectedAppointment.appointDateTime}" style="color: #89CFF0; font-size: 16px;"/>
+                    </div>
+
+                    <div style="padding: 10px; background-color: #f2f2f2; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e6e6e6;">
+                        <p:outputLabel style="font-weight: bold; color: #333; font-size: 16px;">
+                            <i class="fa fa-pencil" aria-hidden="true" style="color: #5bc0de; margin-right: 5px;"></i> Description of Symptoms:
+                        </p:outputLabel>
+                        <h:outputText id="description" 
+                                      value=" #{appointmentManagedBean.selectedAppointment.description}" 
+                                      style="color: #89CFF0; font-size: 16px; max-height: 300px; max-width: 250px ;overflow-x: auto; display: block;"/>
+
+                    </div>
+
+                </p:outputPanel>
+
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="./layout/authentication.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+        <ui:composition template="./layout/authentication.xhtml">
+            <ui:define name="title">
+                Register as Patient
+            </ui:define>
+            <ui:define name="content">         
+                <h:form id="form" enctype="multipart/form-data" >
+                    <p:growl id="growl" showDetail="true" sticky="true" />
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <p:panelGrid columns="1" id="customerGrid" style="width: 712px; height: 90vh;  border: none;" >
+                            <f:facet name="header">
+                                <h2 style="align-self: center; padding-top: 20px; margin-top: -10px; font-size: 30px; font-family: 'Open Sans', sans-serif; color: #89CFF0;">
+                                    <i class="fa fa-leaf" style="color: #89CFF0;"></i> Embark on your Health Journey
+                                </h2>
+                            </f:facet>
+  
+                            <!-- First Name field -->
+                            <h:outputLabel for="firstname">
+                                <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-user"></i></span> First Name:
+                            </h:outputLabel>
+                            <h:panelGroup style="display: block; position: relative; width: 578px;">
+                                <p:inputText id="firstname" 
+                                             value="#{patientManagedBean.firstName}" 
+                                             required="true" 
+                                             requiredMessage="First Name is required"
+                                             style="background-color: #EFF2F4; width: 100%; height: 44px; border-radius: 8px;"/>
+                                <p:message for="firstname" style="display: block; width: 100%; margin-top: 4px;" />
+                            </h:panelGroup>
+
+                            <!-- Last Name field -->
+                            <h:outputLabel for="lastname">
+                                <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-user"></i></span> Last Name:
+                            </h:outputLabel>
+                            <h:panelGroup style="display: block; position: relative; width: 578px;">
+                                <p:inputText id="lastname" 
+                                             value="#{patientManagedBean.lastName}" 
+                                             required="true" 
+                                             requiredMessage="Last Name is required"
+                                             style="background-color: #EFF2F4; width: 100%; height: 44px; border-radius: 8px;"/>
+                                <p:message for="lastname" style="display: block; width: 100%; margin-top: 4px;" />
+                            </h:panelGroup>
+
+
+                            <!-- Contact Details field -->
+                            <h:outputLabel for="contactDetails">
+                                <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-phone"></i></span> Contact Details:
+                            </h:outputLabel>
+                            <h:panelGroup style="display: block; position: relative; width: 578px;">
+                                <p:inputText id="contactDetails"
+                                             value="#{patientManagedBean.contact}"
+                                             required="false"
+                                             style="background-color: #EFF2F4; width: 100%; height: 44px; border-radius: 8px;"/>
+                            </h:panelGroup>
+
+                            <!-- Gender field -->
+                            <h:outputLabel for="gender">
+                                <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-venus-mars"></i></span> Gender:
+                            </h:outputLabel>
+                            <h:panelGroup style="display: block; position: relative; width: 578px;">
+                                <p:selectOneRadio id="gender"
+                                                  value="#{patientManagedBean.gender}"
+                                                  required="true"
+                                                  requiredMessage="Gender is required"
+                                                  layout="lineDirection">
+                                    <f:selectItem itemValue="0" itemLabel="Male" />
+                                    <f:selectItem itemValue="1" itemLabel="Female" />
+                                </p:selectOneRadio> 
+                            </h:panelGroup>
+
+                            
+                            <!-- Email field -->
+                            <h:outputLabel for="email">
+                                <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-envelope"></i></span> Email:
+                            </h:outputLabel>
+                            <h:panelGroup style="display: block; position: relative; width: 578px;">
+                                <p:inputText id="email" 
+                                             value="#{patientManagedBean.email}" 
+                                             required="true" 
+                                             requiredMessage="Email is required" 
+                                             validatorMessage="That is not an email"
+                                             style="background-color: #EFF2F4; width: 100%; height: 44px; border-radius: 8px;">
+                                    <f:validateRegex pattern="^[\w\.-]+@[\w\.-]+\.\w+$" />
+                                </p:inputText>
+                                <p:message for="email" style="display: block; width: 100%; margin-top: 4px;" />
+                            </h:panelGroup>
+
+                            
+                            <!-- Password field -->
+                            <h:outputLabel for="password">
+                                <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-lock"></i></span> Password:
+                            </h:outputLabel>
+                            <h:panelGroup style="display: block; position: relative; width: 578px;">
+                                <p:password id="password" 
+                                            value="#{patientManagedBean.password}" 
+                                            required="true" 
+                                            requiredMessage="Password is required"
+                                            match="confirmPassword" 
+                                            label="Password"
+                                            style="background-color: #EFF2F4; width: 100%; height: 44px; border-radius: 8px;"/>
+                                <p:message for="password" style="display: block; width: 100%; margin-top: 4px;" />
+                            </h:panelGroup>
+
+
+                            <!-- Confirm Password field -->
+                            <h:outputLabel for="confirmPassword">
+                                <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-lock"></i></span> Confirm Password:
+                            </h:outputLabel>
+                            <h:panelGroup style="display: block; position: relative; width: 578px;">
+                                <p:password id="confirmPassword" 
+                                            binding="#{confirmPassword}" 
+                                            required="true" 
+                                            requiredMessage="Confirm Password is required" 
+                                            label="Confirm Password"
+                                            style="background-color: #EFF2F4; width: 100%; height: 44px; border-radius: 8px;"/>
+                                <p:message for="confirmPassword" style="display: block; width: 100%; margin-top: 4px;" />
+                            </h:panelGroup>
+                        </p:panelGrid>
+                        <br/>
+                    </div>
+                    <br/>
+                    <div style="text-align: center;">
+                        <p:commandButton id="success" value="Sign up" actionListener="#{patientManagedBean.addPatient}"
+                                         style="margin: auto; display: block; background-color: #D9D9D9; color: white; width: 360px; height: 50px; border-radius: 8px; font-size: 32px; font-weight: bold; border: none;  padding-bottom: 70px; text-align: center;"
+                                         ajax="false" update="@form growl"
+                                         onmouseover="this.style.backgroundColor='#89CFF0';"
+                                         onmouseout="this.style.backgroundColor='#D9D9D9';"/>
+                    </div>
+
+
+                    <br/>
+
+
+
+                           
+                        
+
+                </h:form>
+            </ui:define>
+            </ui:composition>
+        </body>
+    </ui:composition>
+    

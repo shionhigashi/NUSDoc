@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/patientDefault.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Book an Appointment
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="appointmentForm" class="appointment-create" style="height: 987px;">
+            <p:growl id="growl" showDetail="true" sticky="true"/>
+            <br/>
+            <header class="title"><i class="fa fa-clipboard" aria-hidden="true"></i> Book an Appointment </header>
+            <br/>
+
+            <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+                <p:outputLabel for="appointmentType" style="width:300px">
+                    <i class="fa fa-calendar" aria-hidden="true"></i> Appointment Type
+                </p:outputLabel>
+
+                <p:selectOneMenu id="appointmentType" required="true" value="#{appointmentManagedBean.appointmentType}" style="width: 852">
+                    <f:selectItem itemLabel="General Practitioner" itemValue="1" />
+                    <f:ajax execute="@this" listener="#{appointmentManagedBean.loadAppointmentOptions}" render=":appointmentForm:dynamicSections" />
+                </p:selectOneMenu>
+
+                <br/>
+                <h:panelGroup id="dynamicSections" layout="block">
+                    <h:panelGroup id="generalPracSection" rendered="#{appointmentManagedBean.appointmentType == 1}">
+                        <div class="description-section">
+                            <p:outputLabel for="description" style="display: block; margin-bottom: 5px;">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Description of Symptoms *
+                            </p:outputLabel>
+                            <p:inputTextarea id="description" value="#{appointmentManagedBean.description}" required="true" requiredMessage="Please describe your symptoms" rows="5" cols="30" counter="display" maxlength="500" counterTemplate="{0} characters remaining." autoResize="false" style="width:100%; max-width:100%;" />
+                            <h:outputText id="display" style="color: lightgray; display: block; margin-top: 5px;" />
+                        </div>
+                        <br/>
+                        <h:commandButton id="bookButton" value="Book Appointment" 
+                                         action="#{appointmentManagedBean.bookAppointment}" 
+                                         style="background-color: #AED6F1; color: white;  border-radius: 8px;width: 200px; height: 50px; font-size: 20px;" onmouseover="this.style.backgroundColor='#89CFF0';" onmouseout="this.style.backgroundColor='#AED6F1';">
+                            <f:ajax execute="@form" render="@form growl" />
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGrid>
+
+
+        </h:form>
+
+    </ui:define>
+
+    <script>
+        function forceUpdateSections(data) {
+            if (data.status === 'success') {
+                var apType = document.getElementById('appointmentForm:appointmentType').value;
+                document.getElementById('appointmentForm:generalPracSection').style.display = (apType == '1') ? 'block' : 'none';
+            }
+        }
+
+
+        function forceUpdate() {
+            PF('widgetVarForDoctorPanel').jq.effect("highlight", {}, 1000);
+        }
+    </script>
+
+</ui:composition>

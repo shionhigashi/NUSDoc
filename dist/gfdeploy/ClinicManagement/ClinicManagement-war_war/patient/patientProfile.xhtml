@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/patientDefault.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="title">
+        My Profile
+    </ui:define>
+
+    <ui:param name="pageClass" value="max-content" /> 
+    
+    <ui:define name="content">
+        <div class='profile-container'>
+            <div style="margin: 0 auto; width: fit-content;">
+                <p:growl id="growl" showDetail="true" sticky="true" />
+                <header class="title" style="font-size: 36px;"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;My Profile</header>
+                <br/>
+            </div>
+            <h:panelGroup id="photoContainer">
+                <div id="profile-photo-container" style="margin: 0 auto; width: fit-content;" class="centered-content">
+                    <c:choose>
+                        <c:when test="#{not empty patientManagedBean.loggedInPatient.profilePhoto}">
+                            <img style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 10px;" 
+                                 src="data:image/jpeg;base64,#{patientManagedBean.profilePhoto}" 
+                                 alt="Profile Photo" />
+                        </c:when>
+                        <c:otherwise>
+                            <img style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 10px;" 
+                                 src="../resources/images/emptyProfilePicture.jpg" 
+                                 alt="Empty Profile Photo" />
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </h:panelGroup>
+            <br/>
+            <br/>
+            <h:form id="profileForm" style="margin: 0 auto; width: fit-content;" enctype="multipart/form-data">
+                <h:panelGrid columns="1">
+                    <!-- Profile Photo field -->
+                    <h:outputLabel for="profilePhoto">
+                        <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-camera"></i></span> Profile Photo:
+                    </h:outputLabel>
+                    <h:panelGroup>
+                        <h:inputFile id="profilePhoto" value="#{patientManagedBean.uploadedFile}" disabled="#{not patientManagedBean.editMode}" style='width: 578; height: 44; border-radius: 8px;' />
+                    </h:panelGroup>
+                  
+                    <!-- First Name field -->
+                    <h:outputLabel for="firstname">
+                        <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-user"></i></span> First Name:
+                    </h:outputLabel>
+                    <h:panelGroup>
+                        <h:inputText id="firstName" value="#{patientManagedBean.firstName}" disabled="true" required="true" requiredMessage="First Name is required" style='width: 578; height: 44; border-radius: 8px;' />
+                    </h:panelGroup>
+                    <br/>
+
+                    <!-- Last Name field -->
+                    <h:outputLabel for="lastname">
+                        <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-user"></i></span> Last Name:
+                    </h:outputLabel>
+                    <h:panelGroup>
+                        <h:inputText id="lastName" value="#{patientManagedBean.lastName}" disabled="true" required="true" requiredMessage="Last Name is required" style='width: 578; height: 44; border-radius: 8px;' />
+                    </h:panelGroup>
+                    <br/>
+
+                    <!-- Gender field -->
+                    <h:outputLabel for="gender">
+                        <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-venus-mars"></i></span> Gender:
+                    </h:outputLabel>
+                    <h:panelGroup>
+                        <h:selectOneRadio id="gender"
+                                          value="#{patientManagedBean.gender}"
+                                          disabled="true"
+                                          required="true"
+                                          requiredMessage="Gender is required"
+                                          >
+                            <f:selectItem itemValue="0" itemLabel="Male" />
+                            <f:selectItem itemValue="1" itemLabel="Female" />
+                        </h:selectOneRadio>
+                    </h:panelGroup>
+                    <br/>
+
+                    <!-- Email field -->
+                    <h:outputLabel for="email">
+                        <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-envelope"></i></span> Email:
+                    </h:outputLabel>
+                    <h:panelGroup>
+                        <h:inputText id="email" value="#{patientManagedBean.email}" required="true"
+                                     requiredMessage="Email is required"
+                                     validatorMessage="That is not an email"
+                                     disabled="true"
+                                     style='width: 578; height: 44; border-radius: 8px;'>
+                            <f:validateRegex pattern="^[\w\.-]+@[\w\.-]+\.\w+$" />
+                        </h:inputText>
+                        <p:message for="email" />
+                    </h:panelGroup>
+                    <br/>
+
+                    <!-- Contact field -->
+                    <h:outputLabel for="contactDetails">
+                        <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-phone"></i></span> Contact Details:
+                    </h:outputLabel>
+                    <h:panelGroup>
+                        <h:inputText id="contact" value="#{patientManagedBean.contact}" disabled="#{not patientManagedBean.editMode}" style='width: 578; height: 44; border-radius: 8px;'/>
+                    </h:panelGroup>
+                    <br/>
+
+                    <!-- Password field -->
+                    <h:outputLabel for="password">
+                        <span style="display: inline-block; margin-right: 5px;"><i class="fa fa-lock"></i></span> Password:
+                    </h:outputLabel>
+                    <h:panelGroup>
+                        <h:inputText id="password" 
+                                     value="#{patientManagedBean.password}" 
+                                     required="true" 
+                                     requiredMessage="Password is required"
+                                     validatorMessage="Password must be at least 8 characters long and include at least one letter and one number"
+                                     disabled="#{not patientManagedBean.editMode}" 
+                                     style='width: 578px; height: 44px; border-radius: 8px;'>
+                            <f:validateRegex pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$" />
+                        </h:inputText>
+                    </h:panelGroup>
+                    <br/>
+                   
+                </h:panelGrid>
+                
+                <div style="margin-left: 10%;">
+                    <h:commandButton value="Edit" actionListener="#{patientManagedBean.toggleEditMode()}" style="background-color: #AED6F1; color: white; border-radius: 8px; width: 200px; font-size: 20px; margin-right: 50px;" onmouseover="this.style.backgroundColor='#89CFF0';" onmouseout="this.style.backgroundColor='#AED6F1';">
+                        <f:ajax event="click" render=":profileForm" />
+                    </h:commandButton>
+
+                    <h:commandButton value="Save Changes" actionListener="#{patientManagedBean.saveProfile}" style="background-color: #AED6F1; color: white;  border-radius: 8px;width: 200px; font-size: 20px;" onmouseover="this.style.backgroundColor='#89CFF0';" onmouseout="this.style.backgroundColor='#AED6F1';">
+                        <f:ajax execute="@form profileForm photcontainer" render="@form growl profileForm photoContainer" />
+                    </h:commandButton>
+                </div>
+               
+            </h:form>
+        </div>
+        
+    </ui:define>
+</ui:composition>
