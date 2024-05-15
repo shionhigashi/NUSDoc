@@ -8,9 +8,9 @@
 - Tan Xian Jin, Nicholas
 
 ## Deployment Instructions
-database name: clinicDB
-username: administrator
-password: password
+database name: clinicDB\
+username: administrator\
+password: password\
 
 ## Features:
 1. Patient Portal
