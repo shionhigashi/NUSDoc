@@ -13,7 +13,7 @@ username: administrator\
 password: password
 
 ## Features:
-1. Patient Portal
+**1. Patient Portal**
 Sign in\
 Sign In Validation\
 Register\
@@ -29,7 +29,7 @@ View past appointments\
 View Appointment Details\
 View queue number & number of people in front
 
-2. Doctor Portal
+**2. Doctor Portal**
 Sign in\
 Sign In Validation\
 Log out\
@@ -43,5 +43,5 @@ Completed patient appt\
 Send notification to front desk\
 Cancel notification
 
-Future Possibilities:
+## Future Possibilities:
 - Separate portal for Specialist Doctor allow for appointment booking 1 month advance 
