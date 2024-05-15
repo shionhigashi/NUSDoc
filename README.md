@@ -1,15 +1,13 @@
 # NUSDoc
 
---- 
-## GROUP MEMBERS: 
+## Group Members: 
 - Clarice Lim Pey Wen
 - Foo Zhi Sheng 
 - Higashi Shion
 - Srivarshini Saravanaperumal 
 - Tan Xian Jin, Nicholas
 
----
-## DEPLOYMENT INSTRUCTIONS
+## Deployment Instructions
 database name: clinicDB
 username: administrator
 password: password
