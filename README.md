@@ -8,9 +8,9 @@
 - Tan Xian Jin, Nicholas
 
 ## Deployment Instructions
-database name: clinicDB\
-username: administrator\
-password: password
+1. git clone the repository
+2. Create new database with name "clinicDB", username "administrator" and password "password"
+3. Clean and build project
 
 ## Features:
 **1. Patient Portal**\
