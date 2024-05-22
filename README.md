@@ -11,6 +11,7 @@
 1. git clone the repository
 2. Create new database with name "clinicDB", username "administrator" and password "password"
 3. Clean and build project
+4. Run project
 
 ## Features:
 **1. Patient Portal**\
