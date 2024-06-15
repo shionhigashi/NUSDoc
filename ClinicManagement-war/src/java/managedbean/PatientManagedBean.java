@@ -440,10 +440,7 @@ public class PatientManagedBean implements Serializable {
 
     public List<Appointment> getUpcomingAppointments() {
         // will filter for status that is 'NOTCHECKEDIN'
-        upcomingAppointments = getAppointments().stream()
-                .filter(a -> a.getStatus().equals(AppointmentStatusEnum.NOTCHECKEDIN))
-                .collect(Collectors.toList());
-        
+        upcomingAppointments = appointmentSessionLocal.getUpcomingAppointmentsForPatient(loggedInPatient);
         return upcomingAppointments;
     }
 

@@ -105,7 +105,7 @@ public class AppointmentSession implements AppointmentSessionLocal {
 
     @Override
     public List<Appointment> getUpcomingAppointmentsForPatient(Patient patient) {
-        Query query = em.createQuery("SELECT a FROM Appointment a WHERE a.patient.patientId = :patientId AND a.status = :status");
+        Query query = em.createQuery("SELECT a FROM Appointment a WHERE a.patient.patientId = :patientId AND a.status = :status AND FUNCTION('DATE', a.appointDateTime) >= CURRENT_DATE");
         query.setParameter("patientId", patient.getPatientId());
         query.setParameter("status", AppointmentStatusEnum.NOTCHECKEDIN);
         
